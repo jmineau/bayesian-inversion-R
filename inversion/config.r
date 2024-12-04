@@ -2,7 +2,7 @@
 
 # ~~~~~~~~~~~~~~ Necessary paths ~~~~~~~~~~~~~~#
 
-# paths to inversion directories
+# paths to inversion directories - must include trailing '/'
 src_path <- "src/"
 out_path <- "out/"
 

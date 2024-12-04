@@ -15,7 +15,7 @@ library(ncdf4)
 
 # run dependent scripts
 source("config.r")
-source("src/post_uncert_func.r") #function to extract posterior gridded uncertainty
+source(paste0(src_path, "post_uncert_func.r")) #function to extract posterior gridded uncertainty
 
 # specify start/end from config.r variables
 flux_times <- seq(from = flux_start_POSIX, to = flux_end_POSIX-1, by = flux_t_res) #flux_t_res defined in config.r

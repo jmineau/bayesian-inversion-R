@@ -22,8 +22,8 @@ if(!is.na(lonlat_outer_file) & !dir.exists("H_outer/"))
 if(!dir.exists("HQ/"))
     dir.create("HQ/")
 
-if(!dir.exists("out/"))
-    dir.create("out/")
+if(!dir.exists(out_path))
+    dir.create(out_path)
 
 
 if (clear_H) {
@@ -56,34 +56,34 @@ invisible(sapply(out_files[iFiles], FUN = function(x) system(paste("rm", x))))
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_receptors.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_receptors.r")
+source(paste0(src_path, "make_receptors.r"))
 
 # 2. make sprior (prior emissions vector)
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_sprior.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_sprior.r")
+source(paste0(src_path, "make_sprior.r"))
 
 if (include_outer) {
     # 3. make outer (outer-domain emissions vector)
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
     print("running make_outer.r")
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
-    source("src/make_outer.r")
+    source(paste0(src_path, "make_outer.r"))
 }
 
 # 4. make sigma (prior uncertainty vector)
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_sigma.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_sigma.r")
+source(paste0(src_path, "make_sigma.r"))
 
 if (include_bio) {
     # 5. make sbio - biogenic flux vector
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
     print("running make_sbio.r")
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
-    source("src/make_sbio.r")
+    source(paste0(src_path, "make_sbio.r"))
 }
 
 if (clear_H) {
@@ -91,7 +91,7 @@ if (clear_H) {
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
     print("running Hsplit.r")
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
-    source("src/Hsplit.r")
+    source(paste0(src_path, "Hsplit.r"))
 }
 
 if (include_outer | include_bio) {
@@ -99,76 +99,76 @@ if (include_outer | include_bio) {
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
     print("running make_Hs_bkgd.r")
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
-    source("src/make_Hs_bkgd.r")
+    source(paste0(src_path, "make_Hs_bkgd.r"))
 }
 
 # 8. make spatial covariance matrix
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_sp_cov.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_sp_cov.r")
+source(paste0(src_path, "make_sp_cov.r"))
 
 # 9. make temporal covariance matrix
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_tmp_cov.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_tmp_cov.r")
+source(paste0(src_path, "make_tmp_cov.r"))
 
 # 10. make HQ
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_HQ.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_HQ.r")
+source(paste0(src_path, "make_HQ.r"))
 
 # 11. make bkgd
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_bg.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_bg.r")
+source(paste0(src_path, "make_bg.r"))
 
 # 12. make z (anthropogenic enhancement values)
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_z.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_z.r")
+source(paste0(src_path, "make_z.r"))
 
 # 13. make R (model data mismatch)
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_R.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_R.r")
+source(paste0(src_path, "make_R.r"))
 
 # 14. make z - Hsp
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_zHsp.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_zHsp.r")
+source(paste0(src_path, "make_zHsp.r"))
 
 # 15. make s_hat (optimized emissions vector)
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running inversion.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/inversion.r")
+source(paste0(src_path, "inversion.r"))
 
 # 16. make_Vshat (posterior uncertainty - technically makes Vshat-bar, which is
 # the grid-scale aggregated uncertainty)
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("running make_Vshat.r")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/make_Vshat.r")
+source(paste0(src_path, "make_Vshat.r"))
 
 # 17. convert posterior emissions/uncertainty into netcdf format for interpreting results
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("saving results to netcdf")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
-source("src/post_proc.r")
+source(paste0(src_path, "post_proc.r"))
 
 if (compute_chi_sq) {
     # 18. calculate Chi-squared
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
     print("running chi_sq.r")
     print("~~~~~~~~~~~~~~~~~~~~~~~~")
-    source("src/chi_sq.r")
+    source(paste0(src_path, "chi_sq.r"))
 }
 
 
