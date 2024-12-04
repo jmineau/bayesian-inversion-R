@@ -4,7 +4,8 @@
 
 # paths to inversion directories - must include trailing '/'
 src_path <- "../src/"
-run_path <- paste0("run_", format(Sys.time(), "%Y%m%d_%H%M%S"), "/")
+run_path <- '.'  # default 'inversion' directory
+# run_path <- paste0("run_", format(Sys.time(), "%Y%m%d_%H%M%S"), "/")  # create a new directory for each run based on current time
 out_path <- paste0(run_path, "out/")
 
 # footprint directory
