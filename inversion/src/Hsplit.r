@@ -142,6 +142,39 @@ for (ii in 1:ntimes) {
 }
 
 
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+# if aggregating obs: now combine rows (receptors) into single daily averages
+### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+if (aggregate_obs) {
+  # load in time vars to specify the span of time over which we want subsetted obs
+  y1 <- obs_year_start
+  y2 <- obs_year_end
+
+  m1 <- obs_month_start
+  m2 <- obs_month_end
+
+  d1 <- obs_day_start
+  d2 <- obs_day_end
+
+  h1 <- obs_hour_start
+  h2 <- obs_hour_end
+
+  mn1 <- obs_min_start
+  mn2 <- obs_min_end
+
+  # prepare to aggregate footprint files based on day
+  time_bins_daily <- seq(from = ISOdatetime(y1, m1, d1, h1, mn1, 0, tz = "UTC"), to = ISOdatetime(y2,
+                        m2, d2, h2, mn2, 0, tz = "UTC") + 3600, by = 24 * 3600)
+
+  times_cut_day <- as.POSIXct(cut(recep_times, breaks = time_bins_daily), tz = "UTC")
+
+  #read in receptor aggregation file:
+  receps_aggr <- readRDS(paste0(out_path, "receptors_aggr.rds"))
+  nobs_aggr <- nrow(receps_aggr)
+}
+
+
 # ~~~~~~~~~~~~~~~~~~~~~~~ assemble H matrix ~~~~~~~~~~~~~~~~~~~~~~~#
 for (ii in 1:nobs) {
 
@@ -250,39 +283,8 @@ for (ii in 1:nobs) {
 
 print("replacing footprint .txt files with .rds files")
 
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-# if aggregating obs: now combine rows (receptors) into single daily averages
-### ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-# load in time vars to specify the span of time over which we want subsetted obs
-y1 <- obs_year_start
-y2 <- obs_year_end
-
-m1 <- obs_month_start
-m2 <- obs_month_end
-
-d1 <- obs_day_start
-d2 <- obs_day_end
-
-h1 <- obs_hour_start
-h2 <- obs_hour_end
-
-mn1 <- obs_min_start
-mn2 <- obs_min_end
-
-# prepare to aggregate footprint files based on day
-time_bins_daily <- seq(from = ISOdatetime(y1, m1, d1, h1, mn1, 0, tz = "UTC"), to = ISOdatetime(y2,
-                       m2, d2, h2, mn2, 0, tz = "UTC") + 3600, by = 24 * 3600)
-
-
-times_cut_day <- as.POSIXct(cut(recep_times, breaks = time_bins_daily), tz = "UTC")
-
-#read in receptor aggregation file:
-receps_aggr <- readRDS(paste0(out_path, "receptors_aggr.rds"))
-nobs_aggr <- nrow(receps_aggr)
-
 # run through each timestep, load H txt file, combine times into daily
-# footprints, and re-save as RDS
+# footprints if aggregating, and re-save as RDS
 
 # note: ntimes defined in config.r
 for (ii in 1:ntimes) {
