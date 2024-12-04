@@ -13,14 +13,14 @@ source("config.r")
 # get all files in the outer directory
 out_files <- paste0(out_path, list.files(out_path))
 
-if(!dir.exists("H/"))
-    dir.create("H/")
+if(!dir.exists(H_path))
+    dir.create(H_path)
 
-if(!is.na(lonlat_outer_file) & !dir.exists("H_outer/"))
-    dir.create("H_outer/")
+if(!is.na(lonlat_outer_file) & !dir.exists(H_outer_path))
+    dir.create(H_outer_path)
 
-if(!dir.exists("HQ/"))
-    dir.create("HQ/")
+if(!dir.exists(HQ_path))
+    dir.create(HQ_path)
 
 if(!dir.exists(out_path))
     dir.create(out_path)
@@ -28,19 +28,19 @@ if(!dir.exists(out_path))
 
 if (clear_H) {
     # H files
-    if (length(list.files("H/")) > 0) {
-        out_files <- c(out_files, paste0("H/", list.files("H/")))
+    if (length(list.files(H_path)) > 0) {
+        out_files <- c(out_files, paste0(H_path, list.files(H_path)))
     }
 
     # H files (outer domain)
-    if (!is.na(lonlat_outer_file) & length(list.files("H_outer/")) > 0) {
-        out_files <- c(out_files, paste0("H_outer/", list.files("H/")))
+    if (!is.na(lonlat_outer_file) & length(list.files(H_outer_path)) > 0) {
+        out_files <- c(out_files, paste0(H_outer_path, list.files(H_outer_path)))
     }
 }
 
 # HQ files
-if (length(list.files("HQ/")) > 0) {
-    out_files <- c(out_files, paste0("HQ/", list.files("HQ/")))
+if (length(list.files(HQ_path)) > 0) {
+    out_files <- c(out_files, paste0(HQ_path, list.files(HQ_path)))
 }
 
 # determine which of these files exist (redundant but good)

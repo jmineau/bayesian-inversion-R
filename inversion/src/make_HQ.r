@@ -9,7 +9,7 @@
 ##  Hsplit.r
 ##
 ## output files:
-##  HQ/HQ*.rds - multiples files, 1 per inversion timestep, containing HQ matrix
+##  HQ_path/HQ*.rds - multiples files, 1 per inversion timestep, containing HQ matrix
 ##  slices each with dimension (#obs x #cells)
 ##  HQHt.rds - file containing a (#obs x #obs) matrix with the result of H * Q * t(H)
 
@@ -20,7 +20,7 @@ source("config.r")
 # ~~~~~~~~~~~~~ define a function to read sparse H file ~~~~~~~~~~~~~~~ #
 read_sparse_h <- function(timestep, nobs, ncells) {
 
-    Hi_tmp <- readRDS(paste0("H/H", formatC(timestep, width = filename_width, flag = "0"), ".rds"))
+    Hi_tmp <- readRDS(paste0(H_path, "H", formatC(timestep, width = filename_width, flag = "0"), ".rds"))
     # Populate the H-slice matrix (nobs x ncells) with zeros
     Hi <- array(0, dim = c(nobs, ncells))
 
@@ -109,7 +109,7 @@ for (ii in 1:ntimes) {
     HQHt <- HQHt + HQ %*% t(Hii)
 
     # ~~~~~~~~~~~~~~~ save HQ-slice file ~~~~~~~~~~~~~~~#
-    filepath <- paste0("HQ/HQ", formatC(ii, width = filename_width, flag = "0"), ".rds")
+    filepath <- paste0(HQ_path, "HQ", formatC(ii, width = filename_width, flag = "0"), ".rds")
     print(paste0("writing file ", filepath))
     saveRDS(HQ, filepath)
 

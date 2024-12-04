@@ -84,7 +84,7 @@ HQsum <- array(0, dim = c(nobs, ncells)) #create empty array to eventually hold 
 
 # populate HQsum
 for (ii in tstart:tstop) {
-    HQ_file <- paste0("HQ/HQ", formatC(ii, width = filename_width, flag = "0"), ".rds")
+    HQ_file <- paste0(HQ_path, "HQ", formatC(ii, width = filename_width, flag = "0"), ".rds")
     HQii <- readRDS(HQ_file)
     HQsum <- HQsum + HQii
 }
@@ -159,7 +159,7 @@ if(length(isubset) > 1){
     HQsum_subset <- array(0, dim = c(nobs, ncells)) #create empty array to eventually hold sum
     # populate HQsum_subset
     for (ii in isubset) {
-        HQ_file <- paste0("HQ/HQ", formatC(ii, width = filename_width, flag = "0"), ".rds")
+        HQ_file <- paste0(HQ_path, "HQ", formatC(ii, width = filename_width, flag = "0"), ".rds")
         HQii <- readRDS(HQ_file)
         HQsum_subset <- HQsum_subset + HQii
     }

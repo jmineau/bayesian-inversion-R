@@ -60,7 +60,7 @@ additive_cor <- array(0, dim = c(1, 0))
 
 # load in HQ files - ntimes defined in config.r
 for (ii in 1:ntimes) {
-    HQ_i <- readRDS(paste0("HQ/HQ", formatC(ii, width = filename_width, flag = "0"), ".rds"))
+    HQ_i <- readRDS(paste0(HQ_path, "HQ", formatC(ii, width = filename_width, flag = "0"), ".rds"))
     HQTi_s <- t(HQ_i) %*% HQHtR_zHsp
     additive_cor <- c(additive_cor, HQTi_s)
 

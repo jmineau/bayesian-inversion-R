@@ -3,11 +3,12 @@
 # ~~~~~~~~~~~~~~ Necessary paths ~~~~~~~~~~~~~~#
 
 # paths to inversion directories - must include trailing '/'
-src_path <- "src/"
-out_path <- "out/"
+src_path <- "../src/"
+run_path <- paste0("run_", format(Sys.time(), "%Y%m%d_%H%M%S"), "/")
+out_path <- paste0(run_path, "out/")
 
 # footprint directory
-foot_dir <- "../footprints/"
+foot_dir <- paste0(run_path, "footprints/")
 
 # Names of observational sites (correspond to directory names in the footprint
 # dir)
@@ -15,7 +16,14 @@ sites <- c("site1", "site2", "site3", "site4")
 nsites <- length(sites)
 
 # include path
-include_dir <- "../include/"
+include_dir <- paste0(run_path, "include/")
+
+# jacobian paths
+H_path <- paste0(run_path, "H/")
+H_outer_path <- paste0(run_path, "H_outer/")
+HQ_path <- paste0(run_path, "HQ/")
+
+# ~~~~~~~~~~~~~~ Boolean flags ~~~~~~~~~~~~~~#
 
 # Do we want to clear footprints?  re-running Hsplit.r can take time, so opt not
 # to clear footprints when possible
