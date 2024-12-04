@@ -6,12 +6,25 @@
 # start the clock to keep track of how long it takes for the script to run
 ptm1_all <- proc.time()
 
-# ~~~~~~~~~~~ Clear all existing data files before proceeding ~~~~~~~~~#
+
+# ~~~~~~~~~~~ Load configuration file ~~~~~~~~~#
 
 source("config.r")
 
-# get all files in the outer directory
-out_files <- paste0(out_path, list.files(out_path))
+# Copy the config files to the run directory
+
+file.copy("config.r", paste0(run_path, "config.r"), overwrite = TRUE)
+config_content <- readLines(paste0(run_path, "config.r"))
+config_content <- gsub("run_path <- \".*\"|run_path <- '.*'", "run_path <- './'", config_content)
+writeLines(config_content, paste0(run_path, "config.r"))
+
+file.copy("config_R_uncert.r", paste0(run_path, "config_R_uncert.r"), overwrite = TRUE)
+
+
+# ~~~~~~~~~~~ Create directory structure ~~~~~~~~~#
+
+if(!dir.exists(out_path))
+    dir.create(out_path)
 
 if(!dir.exists(H_path))
     dir.create(H_path)
@@ -22,9 +35,11 @@ if(!is.na(lonlat_outer_file) & !dir.exists(H_outer_path))
 if(!dir.exists(HQ_path))
     dir.create(HQ_path)
 
-if(!dir.exists(out_path))
-    dir.create(out_path)
 
+# ~~~~~~~~~~~ Clear all existing data files before proceeding ~~~~~~~~~#
+
+# get all files in the out directory
+out_files <- paste0(out_path, list.files(out_path))
 
 if (clear_H) {
     # H files
@@ -173,6 +188,7 @@ if (compute_chi_sq) {
 
 
 # ~~~~~~~~~~~~~~~~ get elapsed time data ~~~~~~~~~~~~~~~~#
+
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
 print("~~~~~~~~~~~~~~~~~~~~~~~~")
